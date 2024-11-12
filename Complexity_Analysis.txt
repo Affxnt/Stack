@@ -5,7 +5,7 @@ Time Complexity:
 
 	Normally, the push operation takes O(1) time since it simply increments topIndex and places an element in stackArray.
 	However, if the stack is full, it must expand by doubling its size. The expandStack method copies elements from the old array to a new, larger array, which takes O(x) time where x is the current size of the 	stack.
-
+ 
 	Over a sequence of n pushes, the total cost of expansions is O(n), so the time complexity of push remains O(1).
 	
 	Pop Operation:
