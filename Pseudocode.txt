@@ -1,0 +1,139 @@
+//Written by: Affan Thameem (40282375) 
+//Class: COMP 352 Fall 2024
+//COMP 352 Programming A2
+//Due Date: Monday, November 4th 2024
+
+PseudoCode: 
+
+Algorithm ExpandableStack(stackArray, topIndex)
+    // Initialize an expandable stack with an array to store characters (stackArray)
+    // and an integer (topIndex) to track the top of the stack.
+
+    // Method to push a character onto the stack
+    Method push(c):
+        // If the stack is full, print a message and expand the stack
+        If isFull() then
+            Print "Stack is full; its current size is " + stackArray.length
+            expandStack()
+        // Increment the top index and store the character at the top of the stack
+        Increment topIndex by 1
+        stackArray[topIndex] = c
+
+    // Method to pop the top character from the stack
+    Method pop() -> character:
+        // If the stack is empty, throw an error indicating that pop cannot be performed
+        If isEmpty() then
+            Throw "Cannot pop: Stack is empty"
+        // Return the character at the top and decrement the top index
+        Return stackArray[topIndex] and decrement topIndex by 1
+
+    // Method to view the top character without removing it
+    Method top() -> character:
+        // If the stack is empty, throw an error indicating that top cannot be retrieved
+        If isEmpty() then
+            Throw "Cannot retrieve top: Stack is empty"
+        // Return the character at the top of the stack
+        Return stackArray[topIndex]
+
+    // Method to get the current number of elements in the stack
+    Method size() -> integer:
+        # The size of the stack is the top index plus one
+        Return topIndex + 1
+
+    // Method to check if the stack is empty
+    Method isEmpty() -> boolean:
+        // Return true if there are no elements in the stack (topIndex is -1)
+        Return true if topIndex == -1, otherwise false
+
+    // Method to check if the stack is full
+    Method isFull() -> boolean:
+        // Return true if the top index has reached the last position in the array
+        Return true if topIndex == stackArray.length - 1, otherwise false
+
+    // Method to expand the stack when it is full
+    Method expandStack():
+        // Double the current size of the stack array
+        newSize = stackArray.length * 2
+        // Print a message showing the new expanded size
+        Print "Will be expanding the size to " + newSize
+        // Create a new array with the expanded size
+        Create newStack array with size newSize
+        // Copy all elements from the old stack to the new expanded stack
+        Copy elements from stackArray to newStack
+        // Set the stack array to refer to the new expanded stack
+        Set stackArray to newStack
+
+
+-----------------------------------------------------------------------------------------------------
+
+Algorithm ParenthesisValidator():
+
+    Method isValid(s: String) -> boolean:
+        // Initialize counters to track unmatched '(' and potential balancing '*' characters
+        openCount = 0
+        starCount = 0
+
+        // Iterate through each character in the string
+        For i from 0 to s.length - 1:
+            ch = s[i]
+
+            // If the character is '(', increment the open parentheses counter
+            If ch == '(' then
+                Increment openCount by 1
+
+            // If the character is ')', try to match it with '(' or '*'
+            Else if ch == ')' then
+                // Decrement openCount if there's an unmatched '('
+                If openCount > 0 then
+                    Decrement openCount by 1
+                // Use '*' as a substitute for ')' if no '(' is available
+                Else if starCount > 0 then
+                    Decrement starCount by 1
+                // Return false if neither '(' nor '*' can balance ')'
+                Else
+                    Return false
+
+            // If the character is '*', count it as a potential balancing character
+            Else if ch == '*' then
+                Increment starCount by 1
+
+            // If the character is '$', ignore it as an end marker
+            Else if ch == '$' then
+                Continue to the next character
+
+        // After processing, check if any remaining '(' can be balanced by '*'
+        Return true if openCount == 0 or starCount >= openCount, otherwise false
+-----------------------------------------------------------------------------------------------------
+
+Algorithm ParenthesisValidatorTest:
+
+    // Main method to run the ParenthesisValidator on a file of test cases
+    Method main():
+        // Create instance of ParenthesisValidator named validator
+        Create instance of ParenthesisValidator named validator
+        fileName = "PA2_TestFile.txt"
+
+        // Try to open and read the file line by line
+        Try:
+            Open BufferedReader for fileName
+
+            // Process each line in the file until the end
+            While line = br.readLine() is not null:
+                trimmedLine = line.trim()
+
+                // Skip empty lines
+                If trimmedLine is empty then
+                    Continue to the next line
+
+                // Validate the trimmed line for balanced parentheses
+                isValid = validator.isValid(trimmedLine)
+
+                // Print whether the line is "Valid" or "Invalid" based on validation
+                If isValid then
+                    Print trimmedLine + " - Valid"
+                Else
+                    Print trimmedLine + " - Invalid"
+
+        // Catch any I/O exception and print its stack trace
+        Catch IOException e:
+            Print stack trace of e
