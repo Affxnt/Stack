@@ -1,8 +1,3 @@
-//Written by: Affan Thameem (40282375) 
-//Class: COMP 352 Fall 2024
-//COMP 352 Programming A2
-//Due Date: Monday, November 4th 2024
-
 PseudoCode: 
 
 Algorithm ExpandableStack(stackArray, topIndex)
